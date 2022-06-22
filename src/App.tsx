@@ -11,13 +11,15 @@ function App() {
     console.log("init");
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get('code');
-    if (code && !accessToken) {
-      console.log("getting token");
-      const codeVerifier = getCodeVerifier();
-      if (codeVerifier) {
-        getAccessToken(code, codeVerifier).then(token => {
-          setAccessToken(token);
-        });
+    if (code) {
+      if (!accessToken) {
+        console.log("getting token");
+        const codeVerifier = getCodeVerifier();
+        if (codeVerifier) {
+          getAccessToken(code, codeVerifier).then(token => {
+            setAccessToken(token);
+          });
+        }
       }
     } else {
       const codeVerifier = createCodeVerifier();
